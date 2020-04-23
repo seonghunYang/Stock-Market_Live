@@ -1,25 +1,22 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {request} from 'request';
+import Layout from './components/Layout';
+// const s = require('request');
+
+
+// s('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bqgqrufrh5r8lcmqasig', { json: true }, (err, res, body) => {
+//   if (err) { return console.log(err); }
+//   console.log(body.url);
+//   console.log(body.explanation);
+// });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <Layout />
+      </div>
   );
 }
 
