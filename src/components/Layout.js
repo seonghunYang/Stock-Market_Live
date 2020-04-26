@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import MenuList from './MenuList';
 
 const drawerWidth = 250;
 
@@ -98,6 +99,7 @@ export default function Layout() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        style={{background:'#2979ff'}}
       >
         <Toolbar>
           <IconButton
@@ -129,6 +131,7 @@ export default function Layout() {
           </IconButton>
         </div>
         <Divider />
+        <MenuList />
       </Drawer>
     </div>
   );

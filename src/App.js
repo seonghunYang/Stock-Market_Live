@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import {request} from 'request';
 import Layout from './components/Layout';
+import Main from './components/Main';
+
 // const s = require('request');
 
 
@@ -16,6 +18,7 @@ function App() {
   return (
       <div>
         <Layout />
+        <Main />
       </div>
   );
 }
