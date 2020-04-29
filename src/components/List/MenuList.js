@@ -12,7 +12,9 @@ import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
-import BusinessIcon from '@material-ui/icons/Business';
+import WishList from './WishList';
+import CompanyList from './CompanyList';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,33 +27,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CompanyList() {
+export default function MenuList() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  
-  const handleClick = () => {
-    setOpen(!open);
-  };
+
 
   return (
-    <div>
-      <ListItem button onClick={handleClick}>
+    <List
+      component="nav"
+      aria-labelledby="nested-list"
+      className={classes.root}
+    >
+      <CompanyList />
+      <WishList />
+      <ListItem button>
         <ListItemIcon>
-          <BusinessIcon />
+          <ReceiptIcon />
         </ListItemIcon>
-        <ListItemText primary="Company List" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary="News" />
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="Apple" style={{textAlign: "center"}} />
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-          </ListItem>
-        </List>
-      </Collapse>
-    </div>
+    </List>
   );
 }

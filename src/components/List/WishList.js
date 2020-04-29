@@ -12,9 +12,8 @@ import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
-import WishList from './WishList';
-import CompanyList from './CompanyList';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import Typography from '@material-ui/core/Typography';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,28 +26,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuList() {
+export default function WishList() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-
+  const [open, setOpen] = React.useState(false);
+  
   const handleClick = () => {
     setOpen(!open);
   };
 
   return (
-    <List
-      component="nav"
-      aria-labelledby="nested-list"
-      className={classes.root}
-    >
-      <ListItem button>
+    <Typography component="div">
+      <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <ReceiptIcon />
+          <BookmarksIcon />
         </ListItemIcon>
-        <ListItemText primary="News" />
+        <ListItemText primary="WishList" />
+        {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <WishList />
-      <CompanyList />
-    </List>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemText primary="ex" style={{textAlign: "center"}}/>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+          </ListItem>
+        </List>
+      </Collapse>
+    </Typography>
   );
 }
