@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -16,12 +17,16 @@ const useStyles = makeStyles((theme) => ({
 export default function CompanyItem({ index }) {
   const classes = useStyles();
   const searchedCompanyList = useSelector(state => state.searchedCompanyList);
-  if(index > searchedCompanyList.length -1 ) {
+  if(index > searchedCompanyList.length -1 || !searchedCompanyList) {
     return (<div></div>)
   }
+  const symbol = searchedCompanyList[index].symbol;
   return (
-    <ListItem button className={classes.nested}>
-      <ListItemText primary={searchedCompanyList[index].symbol}
+    <ListItem button={true} className={classes.nested}
+    component={Link}
+    to={`/stock/${symbol}`}
+    >
+      <ListItemText primary={symbol}
        style={{textAlign: "center"}} />
       <ListItemIcon>
         <StarBorder />

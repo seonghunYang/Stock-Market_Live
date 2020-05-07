@@ -1,18 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import BusinessIcon from '@material-ui/icons/Business';
-import { createCompanyList } from '../../actions/index';
 import CompanyItem from './CompanyItem';
-import { FixedSizeList } from 'react-window';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -35,15 +30,10 @@ export default function CompanyList() {
   const [open, setOpen] = React.useState(false);
   const [items, setItems] = React.useState(Array.from( {length:20 }));
   const [hasMore, setHasMore] = React.useState(true);
-  const dispatch = useDispatch();
-  const companyList = useSelector(state => state.companyList);
   const searchedCompanyList = useSelector(state => state.searchedCompanyList);
 
   const handleClick = () => {
     setOpen(!open);
-    if(!companyList){
-      dispatch(createCompanyList());
-      }
   };
   // 500개 까지만 읽기..뉴스에도 이 알고리즘 들어간다.
   const isMoreData = () => {
