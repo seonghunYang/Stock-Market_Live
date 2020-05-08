@@ -55,7 +55,7 @@ export default function CompanyList() {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit> 
-      <CompanySearchBar />       
+      <CompanySearchBar  />       
         {searchedCompanyList && 
         <InfiniteScroll
           dataLength={items.length}

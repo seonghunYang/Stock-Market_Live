@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import MenuList from './List/MenuList';
 
-const drawerWidth = 250;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {

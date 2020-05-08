@@ -22,7 +22,6 @@ import Container from '@material-ui/core/Container';
 //   console.log(body.url);
 //   console.log(body.explanation);
 // });
-const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -19,16 +19,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "4.5em"
   },
   text: {
-    fontSize: "1.75em"
+    fontSize: "1.75em",
   }
   })
 )
 
 const CompanyProfile = ({ companyInfo }) => {
   const classes = useStyles(); 
-  if(companyInfo === "no company information") {
-    return (<div className={classes.text}>no company information</div>)
-  }
   return (
     <>
       <TableContainer component={Paper} elevation={0}>

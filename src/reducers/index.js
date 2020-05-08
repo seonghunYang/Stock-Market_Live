@@ -4,6 +4,7 @@ const initialState = {
   companyList: null ,
   searchedCompanyList: null,
   companyInfo: null,
+  companyStockInfo: null 
 }
 
 const reducer = produce((state, action) => {
@@ -17,6 +18,7 @@ const reducer = produce((state, action) => {
       break;
     case "CREATE_DETAIL":
       state.companyInfo = action.payload;
+      state.companyStockInfo = action.payload2;
       break;
     default:
       break;

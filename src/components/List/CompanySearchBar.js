@@ -21,8 +21,10 @@ export default function CompanySearchBar() {
       className={classes.nested}
       size="small"
       onChange={(event) => {
-        let searchedCompany = companyList.filter(item =>(item.symbol.indexOf(event.target.value.toUpperCase()) > -1));
-        dispatch(SearchCompany(searchedCompany));
+        if(companyList){
+          let searchedCompany = companyList.filter(item =>(item.symbol.indexOf(event.target.value.toUpperCase()) > -1));
+          dispatch(SearchCompany(searchedCompany));
+        }
         }} />
   );
 };

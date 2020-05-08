@@ -3,6 +3,8 @@ import axios from 'axios';
 const API_KEY = "bqgqrufrh5r8lcmqasig";
 const API_COMPANYLIST_URL = "https://finnhub.io/api/v1/stock/symbol";
 const API_COMPANYPROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
+const QUOTE_URL = "https://finnhub.io/api/v1/quote"
+const TARGET_URL = "https://finnhub.io/api/v1/stock/price-target";
 
 export function createCompanyList() {
   return async (dispatch) => {
@@ -29,18 +31,33 @@ export function SearchCompany(companyList) {
 export function detailInfo(symbol) {
   return async (dispatch) => {
     try {
+
       const {data} = await axios(API_COMPANYPROFILE_URL, 
         {params: { symbol: symbol, token : API_KEY}});
-      console.log(data);
+
+      const quote_data = await axios(QUOTE_URL,
+        {params: {symbol: symbol, token: API_KEY}}
+        );
+
+      const target_data = await axios(TARGET_URL,{
+        params: {symbol: symbol, token: API_KEY}
+      });     
+
+      quote_data.data["targetHigh"] = target_data.data.targetHigh;
+      quote_data.data["targetLow"] = target_data.data.targetLow;
+      quote_data.data["targetMean"] = target_data.data.targetMean;
+    
       if(Object.keys(data).length === 0) {
         dispatch({
           type: "CREATE_DETAIL",
-          payload: {ticker: symbol, name: "no company information"}
+          payload: {ticker: symbol, name: "no company information"},
+          payload2: quote_data.data
         })
       }else{
       dispatch({
         type: "CREATE_DETAIL",
-        payload: data
+        payload: data,
+        payload2: quote_data.data
       });
     }
     }catch(error) {

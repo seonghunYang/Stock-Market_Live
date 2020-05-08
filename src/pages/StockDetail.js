@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { detailInfo } from '../actions/index';
 import Container from '@material-ui/core/Container';
-
+import Grid from '@material-ui/core/Grid';
 import CompanyProfile from '../components/CompanyProfile';
+import CompanyStat from '../components/CompanyStat';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     },
@@ -26,6 +28,7 @@ const StockDetail = () => {
   let { symbol } = useParams();
   const dispatch = useDispatch();
   const companyInfo = useSelector(state => state.companyInfo);
+  const stockInfo = useSelector(state => state.companyStockInfo);
   const classes = useStyles();
   useEffect(() => {
     if(companyInfo){
@@ -38,17 +41,26 @@ const StockDetail = () => {
     }
     else{
     dispatch(detailInfo(symbol));
-    }
+  }
   })
 //ticker name  marketCapot... phone weburl industry
+//차트와 테이블 area chart 일자별 선택과 candlechart 선택 
   return (
     <>
       {companyInfo && <Container maxWidth="md">
+        <Grid container spacing={0}>
         <div className={classes.root}>
           <span className={classes.title}>{companyInfo.ticker}</span>
           <span className={classes.text}>({companyInfo.name})</span>
         </div>
           <CompanyProfile companyInfo={companyInfo} />
+        <Grid item md={7}>
+        </Grid>
+        <Grid item md={5}>
+          <CompanyStat stockInfo={stockInfo} />
+        </Grid>
+
+        </Grid>
       </Container>}
     </>  
     )
