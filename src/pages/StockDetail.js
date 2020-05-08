@@ -7,7 +7,9 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
+import { TypeChooser } from "react-stockcharts/lib/helper";
 
+import AreaChart from '../components/AreaChart';
 const useStyles = makeStyles((theme) => ({
   root: {
     },
@@ -29,6 +31,7 @@ const StockDetail = () => {
   const dispatch = useDispatch();
   const companyInfo = useSelector(state => state.companyInfo);
   const stockInfo = useSelector(state => state.companyStockInfo);
+  const candleInfo = useSelector(state => state.companyCandleInfo);
   const classes = useStyles();
   useEffect(() => {
     if(companyInfo){
@@ -55,11 +58,14 @@ const StockDetail = () => {
         </div>
           <CompanyProfile companyInfo={companyInfo} />
         <Grid item md={7}>
+          <TypeChooser>
+            {type => <AreaChart type={type} data={candleInfo} />}
+          </TypeChooser>
         </Grid>
         <Grid item md={5}>
           <CompanyStat stockInfo={stockInfo} />
         </Grid>
-
+          
         </Grid>
       </Container>}
     </>  

@@ -1,34 +1,26 @@
 import axios from "axios";
+import { timeParse } from "d3-time-format";
 
-const QUOTE_URL = "https://finnhub.io/api/v1/quote"
 const CANDLE_URL = "https://finnhub.io/api/v1/stock/candle"
-const TARGET_URL = "https://finnhub.io/api/v1/stock/price-target";
 const API_KEY = "bqgqrufrh5r8lcmqasig";
+const parseDate = timeParse("%Y-%m-%d");
 
-function dataProcessing(quote, candle, target) {
-
-}
-
-
-export async function currentDataLoader(symbol) {
-
-  try{
-  const quote_data = await axios(QUOTE_URL,
-    {params: {symbol: symbol, token: API_KEY}}
-    );
-  const target_data = await axios(TARGET_URL,{
-    params: {symbol: symbol, token: API_KEY}
+//chart 만들기 위한 데이터 모양으로 변경
+function dataProcess(data) {
+  const processData = [];
+  data.t.forEach((d, idx) => {
+    let obj = {};
+    let date = new Date(d * 1000);
+    obj["close"] = data.c[idx];
+    obj["high"] = data.h[idx];
+    obj["low"] = data.l[idx];
+    obj["open"] = data.o[idx];
+    obj["date"] = date;
+    obj["volume"] = data.v[idx];
+    processData.push(obj);
   });
-  quote_data.data["targetHigh"] = target_data.data.targetHigh;
-  quote_data.data["targetLow"] = target_data.data.targetLow;
-  quote_data.data["targetMean"] = target_data.data.targetMean;
-
-  return quote_data.data;
-
-  }catch(error){
-    console.error(error)
-  }
-} 
+  return processData;
+}
 
 export async function candleDataLoader(symbol, resolution = "D"){
   let days = 60 * 60 * 24;
@@ -48,7 +40,9 @@ export async function candleDataLoader(symbol, resolution = "D"){
         }}
       );
     console.log(candle_data.data);
+    const process_candle_data = dataProcess(candle_data.data);
+    return process_candle_data;
     }catch(error){
       console.error(error)
     }
-  } 
+} 
