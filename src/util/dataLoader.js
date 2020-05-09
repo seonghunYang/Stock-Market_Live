@@ -28,7 +28,7 @@ export async function candleDataLoader(symbol, resolution = "D"){
   let year = days * 365;
   let d = new Date();
   let toDay = parseInt(d.getTime() / 1000); 
-  let fromDay = parseInt(d.getTime() / 1000) - week - days; 
+  let fromDay = parseInt(d.getTime() / 1000) - 50 * week - days; 
   try{
     const candle_data = await axios(CANDLE_URL, 
       {params: {

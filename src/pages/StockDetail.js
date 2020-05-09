@@ -11,9 +11,18 @@ import { TypeChooser } from "react-stockcharts/lib/helper";
 
 import AreaChart from '../components/AreaChart';
 const useStyles = makeStyles((theme) => ({
-  root: {
+    root: {
+      paddingRight: 0
     },
-    table: {
+    grid: {
+    marginTop: theme.spacing(3),
+    width: "100%"
+    },
+    gridStat: {
+    marginTop: theme.spacing(3),
+    },
+    typeChooser: {
+      display: "none"
     },
   title: {
     marginBottom:0,
@@ -50,19 +59,17 @@ const StockDetail = () => {
 //차트와 테이블 area chart 일자별 선택과 candlechart 선택 
   return (
     <>
-      {companyInfo && <Container maxWidth="md">
+      {companyInfo && <Container maxWidth="lg" className={classes.root}>
         <Grid container spacing={0}>
         <div className={classes.root}>
           <span className={classes.title}>{companyInfo.ticker}</span>
           <span className={classes.text}>({companyInfo.name})</span>
         </div>
           <CompanyProfile companyInfo={companyInfo} />
-        <Grid item md={7}>
-          <TypeChooser>
-            {type => <AreaChart type={type} data={candleInfo} />}
-          </TypeChooser>
+        <Grid className={classes.grid} item md={7}>
+            <AreaChart type="hybrid" data={candleInfo} />
         </Grid>
-        <Grid item md={5}>
+        <Grid className={classes.gridStat} item md={5}>
           <CompanyStat stockInfo={stockInfo} />
         </Grid>
           

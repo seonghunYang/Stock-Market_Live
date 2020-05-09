@@ -16,8 +16,17 @@ const canvasGradient = createVerticalLinearGradient([
 	{ stop: 1, color: hexToRGBA("#4286f4", 0.8) },
 ]);
 
+let days = 60 * 60 * 24;
+let week = days * 7;
+let year = days * 365;
+let d = new Date();
+let toDay = parseInt(d.getTime() / 1000); 
+let date1 = new Date((toDay )* 1000);
+let date2 = new Date((toDay- 4*week - 1*days )* 1000);
+
 
 class AreaChart extends React.Component {
+
   
   render() {
     const { data, type, width, ratio } = this.props;
@@ -25,12 +34,13 @@ class AreaChart extends React.Component {
       return ;
     }
     return(
-      <ChartCanvas ratio={ratio} width={width} height={400}
+      <ChartCanvas ratio={ratio} width={width}  height={400}
       margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
       seriesName="MSFT"
       data={data} type={type}
       xAccessor={data => data.date}
       xScale={scaleTime()}
+      xExtents={[date2, date1]}
     >
 			<Chart id={0} yExtents={d => d.close}>
         <defs>
@@ -40,7 +50,7 @@ class AreaChart extends React.Component {
             <stop offset="100%"  stopColor="#4286f4" stopOpacity={0.8} />
           </linearGradient>
           </defs>
-          <XAxis axisAt="bottom" orient="bottom" ticks={5}/>
+          <XAxis axisAt="bottom" orient="bottom" ticks={5} />
 					<YAxis axisAt="left" orient="left" />
           <AreaSeries
 						yAccessor={d => d.close }
