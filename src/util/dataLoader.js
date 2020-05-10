@@ -39,7 +39,11 @@ export async function candleDataLoader(symbol, resolution = "D"){
         to: toDay
         }}
       );
+    
     console.log(candle_data.data);
+    if(candle_data.data.s === "no_data") {
+      return null;
+    }
     const process_candle_data = dataProcess(candle_data.data);
     return process_candle_data;
     }catch(error){

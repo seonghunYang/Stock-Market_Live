@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
+import LiveStock from '../components/LiveStock';
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
 import AreaChart from '../components/AreaChart';
@@ -57,23 +58,28 @@ const StockDetail = () => {
   })
 //ticker name  marketCapot... phone weburl industry
 //차트와 테이블 area chart 일자별 선택과 candlechart 선택 
+//주식시장이 주말에 안열어서 확인 불가능 ㅋㅋ
   return (
     <>
-      {companyInfo && <Container maxWidth="lg" className={classes.root}>
+      {companyInfo && <Container maxWidth="md" className={classes.root}>
         <Grid container spacing={0}>
         <div className={classes.root}>
           <span className={classes.title}>{companyInfo.ticker}</span>
           <span className={classes.text}>({companyInfo.name})</span>
         </div>
           <CompanyProfile companyInfo={companyInfo} />
+        {candleInfo &&
         <Grid className={classes.grid} item md={7}>
             <AreaChart type="hybrid" data={candleInfo} />
         </Grid>
+        } 
         <Grid className={classes.gridStat} item md={5}>
           <CompanyStat stockInfo={stockInfo} />
         </Grid>
           
         </Grid>
+      
+        <LiveStock />
       </Container>}
     </>  
     )
