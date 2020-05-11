@@ -8,12 +8,14 @@ import Grid from '@material-ui/core/Grid';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
 import LiveStock from '../components/LiveStock';
-import { TypeChooser } from "react-stockcharts/lib/helper";
 
 import AreaChart from '../components/AreaChart';
 const useStyles = makeStyles((theme) => ({
     root: {
-      paddingRight: 0
+      padding: 0
+    },
+    flex: {
+      display: "flex"
     },
     grid: {
     marginTop: theme.spacing(3),
@@ -63,23 +65,25 @@ const StockDetail = () => {
     <>
       {companyInfo && <Container maxWidth="md" className={classes.root}>
         <Grid container spacing={0}>
-        <div className={classes.root}>
-          <span className={classes.title}>{companyInfo.ticker}</span>
-          <span className={classes.text}>({companyInfo.name})</span>
-        </div>
+          <Grid item md={5} className={classes.root}>
+            <span className={classes.title}>{companyInfo.ticker}</span>
+            <span className={classes.text}>({companyInfo.name})</span>
+          </Grid>
+          <Grid item md={7} className={classes.flex} alignItems='center' >
+              <LiveStock stockInfo={stockInfo} symbol={companyInfo.ticker}/>
+          </Grid>
           <CompanyProfile companyInfo={companyInfo} />
+        </Grid>
+        <Grid container spacing={5}>
         {candleInfo &&
-        <Grid className={classes.grid} item md={7}>
-            <AreaChart type="hybrid" data={candleInfo} />
-        </Grid>
+          <Grid className={classes.grid} item md={7}>
+              <AreaChart type="hybrid" data={candleInfo} />
+          </Grid>
         } 
-        <Grid className={classes.gridStat} item md={5}>
-          <CompanyStat stockInfo={stockInfo} />
-        </Grid>
-          
-        </Grid>
-      
-        <LiveStock />
+          <Grid className={classes.gridStat} item md={5}>
+            <CompanyStat stockInfo={stockInfo} />
+          </Grid>   
+        </Grid>      
       </Container>}
     </>  
     )
