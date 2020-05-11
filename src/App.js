@@ -4,6 +4,7 @@ import './App.css';
 import Layout from './components/Layout';
 import Main from './pages/Main';
 import StockDetail from './pages/StockDetail';
+import NewsPage from './pages/NewsPage';
 import { useDispatch, useSelector } from 'react-redux'
 import { createCompanyList } from './actions/index';
 import {
@@ -53,6 +54,9 @@ function App() {
           <Switch>
             <Route path="/stock/:symbol">
               <StockDetail />
+            </Route>
+            <Route path="/news">
+              <NewsPage />
             </Route>
             <Route path="/">
               <Main />

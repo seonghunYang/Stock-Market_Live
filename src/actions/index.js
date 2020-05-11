@@ -2,16 +2,13 @@ import axios from 'axios';
 import {candleDataLoader} from '../util/dataLoader';
 
 const API_KEY = "bqgqrufrh5r8lcmqasig";
-const API_COMPANYLIST_URL = "https://finnhub.io/api/v1/stock/symbol";
-const API_COMPANYPROFILE_URL = "https://finnhub.io/api/v1/stock/profile2";
-const QUOTE_URL = "https://finnhub.io/api/v1/quote"
-const TARGET_URL = "https://finnhub.io/api/v1/stock/price-target";
-const CANDLE_URL = "https://finnhub.io/api/v1/stock/candle"
+const BASE_URL = "https://finnhub.io/api";
 
+// 'https://finnhub.io/api/v1/news?category=general&token=bqgqrufrh5r8lcmqasig'
 export function createCompanyList() {
   return async (dispatch) => {
     try {
-      const {data} = await axios(API_COMPANYLIST_URL, {params: {exchange: "US", token : API_KEY}})
+      const {data} = await axios(BASE_URL+"/v1/stock/symbol", {params: {exchange: "US", token : API_KEY}})
       console.log(data);
       dispatch({
         type:"CREATE_COMPANYLIST",
@@ -30,20 +27,17 @@ export function SearchCompany(companyList) {
   }
 }
 
-
-
 export function detailInfo(symbol) {
   return async (dispatch) => {
     try {
-
-      const {data} = await axios(API_COMPANYPROFILE_URL, 
+      const {data} = await axios(BASE_URL+"/v1/stock/profile2", 
         {params: { symbol: symbol, token : API_KEY}});
 
-      const quote_data = await axios(QUOTE_URL,
+      const quote_data = await axios(BASE_URL+"/v1/quote",
         {params: {symbol: symbol, token: API_KEY}}
         );
 
-      const target_data = await axios(TARGET_URL,{
+      const target_data = await axios(BASE_URL+"/v1/stock/price-target",{
         params: {symbol: symbol, token: API_KEY}
       });        
       quote_data.data["targetHigh"] = target_data.data.targetHigh;
@@ -73,18 +67,14 @@ export function detailInfo(symbol) {
   }
 }
 
-// export function test() {
-//   return async (dispatch) => {
-//     try {
-//       const result = await axios(API_COMPANYPROFILE_URL, {params: {symbol: "AAPL", token : API_KEY}})
-//       console.log(result);
-//     }catch(error) {
-//       console.error(error);
-//     }
-    
-//   }
-// }
-                  // await data.forEach(async (i) => {
-                  //   const {data} = await axios(API_COMPANYPROFILE_URL, {params: {symbol: i.symbol, token : API_KEY}});
-                  //   companyProfiles[i.symbol] = data;
-                  // });
+export function CreateGeneralNews() {
+  return async (dispatch) => {
+    try{
+      const {data} = await axios(BASE_URL+"/v1/news", 
+        {params: { category: "general", token : API_KEY}});
+      dispatch({type: "CREATE_JENERAL_NEWS", payload: data});
+    }catch(error) {
+      console.error(error);
+    }
+  }
+}

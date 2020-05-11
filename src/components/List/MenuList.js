@@ -15,6 +15,7 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import WishList from './WishList';
 import CompanyList from './CompanyList';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,10 @@ export default function MenuList() {
     >
       <CompanyList />
       <WishList />
-      <ListItem button>
+      <ListItem button
+      component={Link}
+      to="/news"      
+      >
         <ListItemIcon>
           <ReceiptIcon />
         </ListItemIcon>

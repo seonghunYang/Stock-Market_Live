@@ -5,7 +5,8 @@ const initialState = {
   searchedCompanyList: null,
   companyInfo: null,
   companyStockInfo: null,
-  companyCandleInfo: null
+  companyCandleInfo: null,
+  generalNews: null
 }
 
 const reducer = produce((state, action) => {
@@ -21,6 +22,9 @@ const reducer = produce((state, action) => {
       state.companyInfo = action.payload;
       state.companyStockInfo = action.payload2;
       state.companyCandleInfo = action.payload3;
+      break;
+    case "CREATE_JENERAL_NEWS":
+      state.generalNews = action.payload;
       break;
     default:
       break;
