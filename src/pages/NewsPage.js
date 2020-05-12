@@ -8,6 +8,8 @@ import NewsSearchBar from '../components/NewsSearchBar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import NewsChips from '../components/NewsChip';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -51,6 +53,7 @@ export default function NewsPage() {
       {viewNews &&
         <Container maxWidth="md" style={{display:"flex", flexDirection:"column", alignItems:'center'}}>
             <div className={classes.title}>News</div>
+            <NewsChips />
             <NewsSearchBar/>
             {news.length === 0 && <div>뉴스가 없습니다. 다른 symbol로 검색해주세요</div>}
             {viewNews.map(news => <NewsCard key={news.id} news={news} />)}
