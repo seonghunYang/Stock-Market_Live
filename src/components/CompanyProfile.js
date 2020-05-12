@@ -9,10 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TableHead from '@material-ui/core/TableHead';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    },
-    table: {
-    },
   title: {
     marginBottom:0,
     fontWeight: "bold",

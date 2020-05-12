@@ -1,15 +1,13 @@
-//실시간 websocket을 여기서 받을지 아니면 위에서 받을지 구조 생각
-//아무래도 여기서 받는게 안정적일 듯
-//그러면 area는? 추후 차트 추가할 떄 구조 개편이 필요할 듯
-//각각의 컴포넌트 차원에서 데이터를 구성하는게 좋을 듯 함
 import React, { Component } from "react";
 import Typography from '@material-ui/core/Typography';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import RemoveIcon from '@material-ui/icons/Remove';
+
 class LiveStock extends Component {
   constructor(props) {
     super(props);
+
     const changeValue =  this.props.stockInfo.c -this.props.stockInfo.o;
     const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.o * 100)*100) / 100;
     let change = [];
@@ -20,6 +18,7 @@ class LiveStock extends Component {
     }else{
       change = ["=", changeP]
     }
+
     this.state = {
       currentPrice : this.props.stockInfo.c,
       changeList: change,
@@ -46,7 +45,7 @@ class LiveStock extends Component {
         currentPrice: nextProps.stockInfo.c,
         changeList: change
       })
-    return true;
+      return true;
     }
     return true;
   }
@@ -61,46 +60,36 @@ class LiveStock extends Component {
         console.log('connected')
         this.setState({
           socket: socket
-        })
+      })
+    }
+    socket.onmessage = event => {
+      // listen to data sent from the websocket server
+      const socketData = JSON.parse(event.data)
+        if(socketData.type === "ping" || socketData.data[0].s !== this.props.symbol) {
+          return;
         }
-
-      socket.onmessage = event => {
-        // listen to data sent from the websocket server
-        const socketData = JSON.parse(event.data)
-          if(socketData.type === "ping" || socketData.data[0].s !== this.props.symbol) {
-            return;
+        if(setTimer){
+          const updatePrice = socketData.data[0].p;
+          const changeValue =  updatePrice -this.props.stockInfo.o;
+          const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.o * 100)*100) / 100;
+          let change = [];
+          if (changeValue > 0){
+            change = ["+", changeP]
+          }else if(changeValue < 0){
+            change = ["-", changeP]
+          }else{
+            change = ["=", changeP]
           }
-          console.log()
-          console.log(socketData.data[0].p);
-          if(setTimer){
-            const updatePrice = socketData.data[0].p;
-            const changeValue =  updatePrice -this.props.stockInfo.o;
-            const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.o * 100)*100) / 100;
-            let change = [];
-            if (changeValue > 0){
-              change = ["+", changeP]
-            }else if(changeValue < 0){
-              change = ["-", changeP]
-            }else{
-              change = ["=", changeP]
-            }
-            setTimer = false;
-            this.setState({
-              currentPrice: updatePrice,
-              changeList: change
-            });
-        }
+          setTimer = false;
+          this.setState({
+            currentPrice: updatePrice,
+            changeList: change
+        });
       }
+    }
       
-      setInterval(() => {setTimer=true;
-      }, 1000);
-
-      // this.ws.onclose = () => {
-      // console.log('disconnected')
-      // // automatically try to reconnect on connection loss
-
-      // }
-
+    setInterval(() => {setTimer=true;
+    }, 1000);
   }
   render(){
   return (

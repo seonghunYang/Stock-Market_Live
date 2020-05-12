@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 import {SymbolSearchNews} from '../actions/news';
 //general, forex, crypto, merger->chip. 카테고리, symbol
 const useStyles = makeStyles((theme) => ({

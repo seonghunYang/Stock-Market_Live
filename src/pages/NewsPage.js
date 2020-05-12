@@ -1,13 +1,14 @@
 // chip, searchbar 
 import React, {useEffect} from 'react';
 import Container from '@material-ui/core/Container';
-import {CreateGeneralNews} from '../actions/news';
 import { useDispatch, useSelector } from 'react-redux'
-import NewsCard from '../components/NewsCard';
-import NewsSearchBar from '../components/NewsSearchBar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import {CreateGeneralNews} from '../actions/news';
+import NewsCard from '../components/NewsCard';
+import NewsSearchBar from '../components/NewsSearchBar';
 import NewsChips from '../components/NewsChip';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
   })
 )
+
 export default function NewsPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const news = useSelector(state => state.news);
-  const term = useSelector(state => state.term);
   const [viewNews, setViewNews] = React.useState(null);
   
   useEffect(() => {
@@ -47,7 +48,6 @@ export default function NewsPage() {
     }
   });
 
-
   return (
     <>
       {viewNews &&
@@ -64,8 +64,7 @@ export default function NewsPage() {
             className={classes.root}
             onClick={() => {
               setViewNews(news.slice(0,viewNews.length + 5));
-            }}
-            >
+            }}>
               더보기
               <ExpandMoreIcon />
             </Button>

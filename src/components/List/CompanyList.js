@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -7,26 +6,13 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import BusinessIcon from '@material-ui/icons/Business';
-import CompanyItem from './CompanyItem';
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
+import CompanyItem from './CompanyItem';
 import CompanySearchBar from './CompanySearchBar';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
-
-
 export default function CompanyList() {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [items, setItems] = React.useState(Array.from( {length:20 }));
   const [hasMore, setHasMore] = React.useState(true);

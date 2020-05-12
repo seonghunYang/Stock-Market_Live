@@ -7,6 +7,7 @@ const initialState = {
   companyStockInfo: null,
   companyCandleInfo: null,
   news: null,
+  wishlist: []
 }
 
 const reducer = produce((state, action) => {
@@ -29,6 +30,8 @@ const reducer = produce((state, action) => {
     case "CREATE_SYMBOL_NEWS":
       state.news = action.payload;
       break;
+    case "ADD_WISHLIST": 
+      state.wishlist.push(action.symbol);
     default:
       break;
   }

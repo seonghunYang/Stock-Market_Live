@@ -4,7 +4,6 @@ import {candleDataLoader} from '../util/dataLoader';
 const API_KEY = "bqgqrufrh5r8lcmqasig";
 const BASE_URL = "https://finnhub.io/api";
 
-// 'https://finnhub.io/api/v1/news?category=general&token=bqgqrufrh5r8lcmqasig'
 export function createCompanyList() {
   return async (dispatch) => {
     try {
@@ -32,6 +31,7 @@ export function detailInfo(symbol) {
     try {
       const {data} = await axios(BASE_URL+"/v1/stock/profile2", 
         {params: { symbol: symbol, token : API_KEY}});
+      data["symbol"] = symbol;
 
       const quote_data = await axios(BASE_URL+"/v1/quote",
         {params: {symbol: symbol, token: API_KEY}}
@@ -65,4 +65,20 @@ export function detailInfo(symbol) {
       console.error(error);
     }
   }
+}
+
+
+let wishlist = [];
+
+function saveWishlist() {
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+export function addWishlist (symbol) {
+  wishlist.push(symbol);
+  saveWishlist();
+  console.log("wishlist")
+  return ({
+    type: "ADD_WISHLIST", symbol: symbol
+  });
 }

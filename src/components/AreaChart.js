@@ -27,7 +27,6 @@ let date2 = new Date((toDay- 4*week - 1*days )* 1000);
 
 class AreaChart extends React.Component {
 
-  
   render() {
     const { data, type, width, ratio } = this.props;
     if (!data) {

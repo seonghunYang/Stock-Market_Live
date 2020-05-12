@@ -1,9 +1,7 @@
 import axios from "axios";
-import { timeParse } from "d3-time-format";
 
 const CANDLE_URL = "https://finnhub.io/api/v1/stock/candle"
 const API_KEY = "bqgqrufrh5r8lcmqasig";
-const parseDate = timeParse("%Y-%m-%d");
 
 //chart 만들기 위한 데이터 모양으로 변경
 function dataProcess(data) {
