@@ -1,50 +1,72 @@
-// card, chip, searchbar 
+// chip, searchbar 
 import React, {useEffect} from 'react';
 import Container from '@material-ui/core/Container';
-import {CreateGeneralNews} from '../actions/index';
+import {CreateGeneralNews} from '../actions/news';
 import { useDispatch, useSelector } from 'react-redux'
 import NewsCard from '../components/NewsCard';
-import InfiniteScroll from "react-infinite-scroll-component";
-
+import NewsSearchBar from '../components/NewsSearchBar';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      width: "60%"
+    }    
+  },
+  title: {
+    marginBottom:0,
+    fontSize: "4.5em"
+  },
+  })
+)
 export default function NewsPage() {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const generalNews = useSelector(state => state.generalNews);
-  const [hasMore, setHasMore] = React.useState(true);
-  const [items, setItems] = React.useState(Array.from({length:3}));
-
-  const isMoreData = () => {
-    if (items.length >= 20) {
-      setHasMore(false);
+  const news = useSelector(state => state.news);
+  const term = useSelector(state => state.term);
+  const [viewNews, setViewNews] = React.useState(null);
+  
+  useEffect(() => {
+    if(!news) {
+      dispatch(CreateGeneralNews())
+    }
+    if(news && news.length === 0) {
       return;
     }
-    setTimeout(() => {
-      setItems(items.concat(Array.from( {length:5 })));
-    }, 500);
-  }
-
-  useEffect(() => {
-    if(!generalNews){
-      dispatch(CreateGeneralNews());
+    if(news && !viewNews) {
+      setViewNews(news.slice(0,5));
+    }
+    if(news && viewNews && viewNews[0].symbol !== news[0].symbol){
+      setViewNews(news.slice(0,5));
     }
   });
+
+
   return (
     <>
-      {generalNews &&
+      {viewNews &&
         <Container maxWidth="md" style={{display:"flex", flexDirection:"column", alignItems:'center'}}>
-          <InfiniteScroll
-            dataLength={5}
-            next={isMoreData}
-            hasMore={hasMore}
-            height={300}
-            loader={<div style={{ textAlign: "center" }}>Loading..</div>}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
-          >        
-            {generalNews.map(news => <NewsCard key={news.id} news={news} />)}
-          </InfiniteScroll>
+            <div className={classes.title}>News</div>
+            <NewsSearchBar/>
+            {news.length === 0 && <div>뉴스가 없습니다. 다른 symbol로 검색해주세요</div>}
+            {viewNews.map(news => <NewsCard key={news.id} news={news} />)}
+            {viewNews.length !== news.length &&
+            <Button 
+            variant="outlined" 
+            color="primary" 
+            className={classes.root}
+            onClick={() => {
+              setViewNews(news.slice(0,viewNews.length + 5));
+            }}
+            >
+              더보기
+              <ExpandMoreIcon />
+            </Button>
+          }
         </Container>
       }
     </>

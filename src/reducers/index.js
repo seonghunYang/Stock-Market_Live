@@ -6,7 +6,7 @@ const initialState = {
   companyInfo: null,
   companyStockInfo: null,
   companyCandleInfo: null,
-  generalNews: null
+  news: null,
 }
 
 const reducer = produce((state, action) => {
@@ -24,7 +24,10 @@ const reducer = produce((state, action) => {
       state.companyCandleInfo = action.payload3;
       break;
     case "CREATE_JENERAL_NEWS":
-      state.generalNews = action.payload;
+      state.news = action.payload;
+      break;
+    case "CREATE_SYMBOL_NEWS":
+      state.news = action.payload;
       break;
     default:
       break;

@@ -66,15 +66,3 @@ export function detailInfo(symbol) {
     }
   }
 }
-
-export function CreateGeneralNews() {
-  return async (dispatch) => {
-    try{
-      const {data} = await axios(BASE_URL+"/v1/news", 
-        {params: { category: "general", token : API_KEY}});
-      dispatch({type: "CREATE_JENERAL_NEWS", payload: data});
-    }catch(error) {
-      console.error(error);
-    }
-  }
-}
