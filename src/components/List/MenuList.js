@@ -31,8 +31,6 @@ export default function MenuList() {
       aria-labelledby="nested-list"
       className={classes.root}
     >
-      <CompanyList />
-      <WishList />
       <ListItem button
       component={Link}
       to="/news"      
@@ -42,6 +40,8 @@ export default function MenuList() {
         </ListItemIcon>
         <ListItemText primary="News" />
       </ListItem>
+      <WishList />
+      <CompanyList />
     </List>
   );
 }

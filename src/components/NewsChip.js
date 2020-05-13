@@ -2,20 +2,25 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {CreateGeneralNews} from '../actions/news';
+import {SymbolSearchNews} from '../actions/news';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: "100%",
     display: 'flex',
     justifyContent: 'center',
     marginBottom: theme.spacing(2),    
     flexWrap: 'wrap',
     '& > *': {
       margin: theme.spacing(1),
-    },  
+    },
+    [theme.breakpoints.up('md')]: {
+      width: "60%"
+    }    
   },
   }
 ));
@@ -24,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 export default function NewsChip() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  
+  const wishlist = useSelector(state => state.wishlist);
+
   const ChipItem = ({value, type}) => {
     return (
     <Chip
@@ -32,9 +38,14 @@ export default function NewsChip() {
       label={`${value} news`}
       clickable
       onClick={() => {
-        dispatch(CreateGeneralNews(value));
-      }}
-      color="primary"
+        if(type === "C"){
+          dispatch(CreateGeneralNews(value));
+        }
+        else if(type === "W"){
+          dispatch(SymbolSearchNews(value));
+        }
+        }}
+      color={type === "W" ? "primary" : "secondary"}
       variant="outlined"
     />)
   }
@@ -46,6 +57,9 @@ export default function NewsChip() {
       <ChipItem value="forex" type="C" />
       <ChipItem value="crypto" type="C" />
       <ChipItem value="merger" type="C" />
+      {wishlist.map(item => (
+        <ChipItem value={item.symbol} type="W" />
+      ))}
     </div>
   );
 }

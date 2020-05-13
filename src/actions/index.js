@@ -4,14 +4,23 @@ import {candleDataLoader} from '../util/dataLoader';
 const API_KEY = "bqgqrufrh5r8lcmqasig";
 const BASE_URL = "https://finnhub.io/api";
 
+let wishlist = [];
+
 export function createCompanyList() {
   return async (dispatch) => {
     try {
       const {data} = await axios(BASE_URL+"/v1/stock/symbol", {params: {exchange: "US", token : API_KEY}})
-      console.log(data);
+      const loadedWishlist = await localStorage.getItem('wishlist');
+      let parsedWishlist = [];
+      if (loadedWishlist !== null) {
+        console.log(loadedWishlist)
+        parsedWishlist = JSON.parse(loadedWishlist);
+        console.log(parsedWishlist)
+      }
       dispatch({
         type:"CREATE_COMPANYLIST",
-        payload: data
+        payload: data,
+        wishlist: parsedWishlist,
       });
     }catch(error) {
       console.error(error);
@@ -68,7 +77,6 @@ export function detailInfo(symbol) {
 }
 
 
-let wishlist = [];
 
 function saveWishlist() {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
@@ -81,4 +89,15 @@ export function addWishlist (symbol) {
   return ({
     type: "ADD_WISHLIST", symbol: symbol
   });
+}
+
+export function deleteWishlist (symbol) {
+  const cleanwishlist = wishlist.filter((item) => {  //true만 남김
+    return item.symbol !== symbol.symbol;
+  });
+  wishlist = cleanwishlist;
+  saveWishlist();
+  return ({
+    type: "DELETE_WISHLIST", symbol: symbol
+  })
 }

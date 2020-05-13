@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
 
 import {addWishlist} from "../../actions/index";
+import {deleteWishlist} from "../../actions/index";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
@@ -20,6 +21,21 @@ export default function CompanyItem({ index }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const searchedCompanyList = useSelector(state => state.searchedCompanyList);
+  const wishlist = useSelector(state => state.wishlist);
+  const [isWishlist, setIsWishlist] = React.useState(() => {
+    if(index > searchedCompanyList.length -1 || !searchedCompanyList) {
+    return false;
+    }else{
+      const symbol = searchedCompanyList[index].symbol;
+      let checkWish = false;
+      wishlist.map((item) => {
+          if (item.symbol === symbol){
+            checkWish = true;
+          }
+        })
+      return checkWish;
+    }
+  });
   if(index > searchedCompanyList.length -1 || !searchedCompanyList) {
     return (<div></div>)
   }
@@ -31,11 +47,26 @@ export default function CompanyItem({ index }) {
     >
       <ListItemText primary={symbol}
        style={{textAlign: "center"}} />
-      <ListItemIcon>
-        <IconButton onClick={() => {dispatch(addWishlist({symbol}))}}>
-          <StarBorder />
-        </IconButton>
-      </ListItemIcon>
+       {!isWishlist &&
+        <ListItemIcon>
+          <IconButton onClick={() => {
+            setIsWishlist(true);
+            dispatch(addWishlist({symbol}))}}>
+            <StarBorder  />
+          </IconButton>
+        </ListItemIcon>
+        }
+       {isWishlist &&
+        <ListItemIcon>
+          <IconButton onClick={() => {
+            setIsWishlist(false);
+            dispatch(deleteWishlist({symbol}))
+          }} >
+            <StarIcon style={{color:"#ffeb3b"}} />
+          </IconButton>
+        </ListItemIcon>
+        }
     </ListItem>
+      
   );
 }

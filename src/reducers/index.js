@@ -15,6 +15,7 @@ const reducer = produce((state, action) => {
     case "CREATE_COMPANYLIST": 
       state.companyList = action.payload;
       state.searchedCompanyList = action.payload;
+      state.wishlist = action.wishlist;
       break;
     case "SEARCH_COMPANY":
       state.searchedCompanyList = action.payload;
@@ -31,7 +32,15 @@ const reducer = produce((state, action) => {
       state.news = action.payload;
       break;
     case "ADD_WISHLIST": 
+      console.log(action.symbol);
       state.wishlist.push(action.symbol);
+      break;
+    case "DELETE_WISHLIST":
+      const cleanwishlist = state.wishlist.filter(function(item) {  //true만 남김
+        return item.symbol !== action.symbol.symbol;
+      }); 
+      state.wishlist = cleanwishlist;
+      break;   
     default:
       break;
   }
