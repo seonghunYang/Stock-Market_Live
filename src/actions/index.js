@@ -13,10 +13,10 @@ export function createCompanyList() {
       const loadedWishlist = await localStorage.getItem('wishlist');
       let parsedWishlist = [];
       if (loadedWishlist !== null) {
-        console.log(loadedWishlist)
         parsedWishlist = JSON.parse(loadedWishlist);
-        console.log(parsedWishlist)
       }
+      wishlist = Object.values(parsedWishlist);
+      console.log(wishlist)
       dispatch({
         type:"CREATE_COMPANYLIST",
         payload: data,
@@ -85,7 +85,6 @@ function saveWishlist() {
 export function addWishlist (symbol) {
   wishlist.push(symbol);
   saveWishlist();
-  console.log("wishlist")
   return ({
     type: "ADD_WISHLIST", symbol: symbol
   });
