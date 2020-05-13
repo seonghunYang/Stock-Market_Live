@@ -88,6 +88,9 @@ const StockDetail = () => {
   };
   
   const handleChangeResolution = (event, newValue) => {
+    if(!newValue){
+      return ;
+    }
     setResolution(newValue)
     dispatch(updateCandle(symbol, newValue));
     dateInfo = dateCalculator(newValue);
