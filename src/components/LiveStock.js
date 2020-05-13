@@ -39,6 +39,7 @@ class LiveStock extends Component {
       }else{
         change = ["=", changeP]
       }   
+      console.log(this.state.socket);
       this.state.socket.send(JSON.stringify({'type':'unsubscribe', 'symbol': this.props.symbol}))
       this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': nextProps.symbol}))
       this.setState({

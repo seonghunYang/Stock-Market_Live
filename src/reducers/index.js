@@ -7,7 +7,8 @@ const initialState = {
   companyStockInfo: null,
   companyCandleInfo: null,
   news: null,
-  wishlist: []
+  wishlist: [],
+  loading: false
 }
 
 const reducer = produce((state, action) => {
@@ -40,7 +41,16 @@ const reducer = produce((state, action) => {
         return item.symbol !== action.symbol.symbol;
       }); 
       state.wishlist = cleanwishlist;
-      break;   
+      break;
+    case "UPDATE_CANDLEINFO":
+      state.companyCandleInfo = action.payload   
+      break;
+    case "START_LOADING":
+      state.loading = true;
+      break;
+    case "END_LOADING":
+      state.loading = false;
+      break;
     default:
       break;
   }

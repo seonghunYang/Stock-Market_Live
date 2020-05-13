@@ -13,6 +13,8 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
 import { IconButton } from '@material-ui/core';
+import { useAlert } from 'react-alert';
+import { types } from 'react-alert';
 
 import {deleteWishlist} from "../../actions/index";
 
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const WishListItem = ({symbol}) => {
   const dispatch = useDispatch();
+  const alert = useAlert()
 
   return(
     <ListItem button={true} 
@@ -39,6 +42,7 @@ const WishListItem = ({symbol}) => {
       <ListItemIcon>
         <IconButton onClick={() => {
             dispatch(deleteWishlist({symbol}))
+            alert.show("wishlist를 삭제했습니다.", {type: types.ERROR})
           }}>
           <StarIcon style={{color:"#ffeb3b"}} />
         </IconButton>
@@ -60,7 +64,7 @@ export default function WishList() {
     <Typography component="div">
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <BookmarksIcon />
+          <BookmarksIcon style={{color:"#9575cd"}} />
         </ListItemIcon>
         <ListItemText primary="WishList" />
         {open ? <ExpandLess /> : <ExpandMore />}

@@ -35,8 +35,8 @@ export default function MenuList() {
       component={Link}
       to="/news"      
       >
-        <ListItemIcon>
-          <ReceiptIcon />
+        <ListItemIcon >
+          <ReceiptIcon style={{color:"#9575cd"}}/>
         </ListItemIcon>
         <ListItemText primary="News" />
       </ListItem>

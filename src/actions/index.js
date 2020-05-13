@@ -76,6 +76,21 @@ export function detailInfo(symbol) {
   }
 }
 
+export function updateCandle(symbol, resolution) {
+  return async (dispatch) => {
+    try{
+      dispatch({type:"START_LOADING"});
+      const candle_data = await candleDataLoader(symbol, resolution);
+      dispatch({
+        type: "UPDATE_CANDLEINFO", payload: candle_data
+      })
+      dispatch({type:"END_LOADING"});
+    }catch(error) {
+      console.error(error)
+    }
+  }
+} 
+
 
 
 function saveWishlist() {

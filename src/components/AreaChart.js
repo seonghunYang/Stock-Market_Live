@@ -10,28 +10,23 @@ import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { createVerticalLinearGradient, hexToRGBA } from "react-stockcharts/lib/utils";
 
+import {dateCalculator} from "../util/dataLoader";
+
 const canvasGradient = createVerticalLinearGradient([
 	{ stop: 0, color: hexToRGBA("#b5d0ff", 0.2) },
 	{ stop: 0.7, color: hexToRGBA("#6fa4fc", 0.4) },
 	{ stop: 1, color: hexToRGBA("#4286f4", 0.8) },
 ]);
 
-let days = 60 * 60 * 24;
-let week = days * 7;
-let year = days * 365;
-let d = new Date();
-let toDay = parseInt(d.getTime() / 1000); 
-let date1 = new Date((toDay )* 1000);
-let date2 = new Date((toDay- 4*week - 1*days )* 1000);
-
 
 class AreaChart extends React.Component {
-
   render() {
-    const { data, type, width, ratio } = this.props;
+    // const xExtents = dateCalculator();
+    const { data, type, width, ratio, dateInfo } = this.props;
     if (!data) {
       return ;
     }
+    const xExtents = [dateInfo.from, dateInfo.to];
     return(
       <ChartCanvas ratio={ratio} width={width}  height={400}
       margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
@@ -39,7 +34,7 @@ class AreaChart extends React.Component {
       data={data} type={type}
       xAccessor={data => data.date}
       xScale={scaleTime()}
-      xExtents={[date2, date1]}
+      xExtents={xExtents}
     >
 			<Chart id={0} yExtents={d => d.close}>
         <defs>

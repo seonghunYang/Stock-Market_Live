@@ -28,7 +28,7 @@ export default function () {
 
   return (
     <div className={classes.root} style={{display:"flex"}}>
-      <TextField  label="Search field" type="search" 
+      <TextField  label="search symbol" type="search" 
       id="outlined-full-width"
       fullWidth
       variant="outlined"

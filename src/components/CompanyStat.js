@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "4.5em"
   },
   text: {
-    fontSize: "1.75em"
+    fontSize: "0.9em"
   },
   greytext: {
-    color: "#95a5a6"
+    color: "#95a5a6",
+    fontSize: "0.9em"
   }
   })
 )
@@ -45,41 +46,41 @@ const CompanyStats = ({ stockInfo }) => {
               <TableCell className={classes.greytext} component="th" scope="row">
                 CURR
               </TableCell>
-              <TableCell align="right">{stockInfo.c}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.c}</TableCell>
               <TableCell className={classes.greytext} component="th" scope="row">
                 PREV
               </TableCell>
-              <TableCell align="right">{stockInfo.pc}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.pc}</TableCell>
             </TableRow>
             <TableRow key="previousInfo">
               <TableCell className={classes.greytext} component="th" scope="row">
                 OPEN
               </TableCell>
-              <TableCell align="right">{stockInfo.o}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.o}</TableCell>
               <TableCell className={classes.greytext} component="th" scope="row">
                 TG/MN
               </TableCell>
-              <TableCell align="right">{stockInfo.targetMean}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.targetMean}</TableCell>
             </TableRow>
             <TableRow key="HighInfo">
               <TableCell className={classes.greytext} component="th" scope="row">
                 HIGH
               </TableCell>
-              <TableCell align="right">{stockInfo.h}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.h}</TableCell>
               <TableCell className={classes.greytext} component="th" scope="row">
                 TG/HG
               </TableCell>
-              <TableCell align="right">{stockInfo.targetHigh}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.targetHigh}</TableCell>
             </TableRow>
             <TableRow key="LowInfo">
               <TableCell className={classes.greytext} component="th" scope="row">
                 LOW
               </TableCell>
-              <TableCell align="right">{stockInfo.l}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.l}</TableCell>
               <TableCell className={classes.greytext} component="th" scope="row">
                 TG/LW
               </TableCell>
-              <TableCell align="right">{stockInfo.targetLow}</TableCell>
+              <TableCell className={classes.text} align="right">{stockInfo.targetLow}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

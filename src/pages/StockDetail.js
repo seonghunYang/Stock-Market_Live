@@ -7,16 +7,24 @@ import Grid from '@material-ui/core/Grid';
 import { IconButton } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorder from '@material-ui/icons/StarBorder';
-import { useAlert } from 'react-alert'
-import { types } from 'react-alert'
+import { useAlert } from 'react-alert';
+import { types } from 'react-alert';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import LoadingOverlay from 'react-loading-overlay';
 
 import { detailInfo } from '../actions/index';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
 import LiveStock from '../components/LiveStock';
 import AreaChart from '../components/AreaChart';
+import CandleStickChart from '../components/CandleStickChart';
 import {addWishlist} from "../actions/index";
 import {deleteWishlist} from "../actions/index";
+import {updateCandle} from "../actions/index";
+import {dateCalculator} from "../util/dataLoader";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,8 +34,12 @@ const useStyles = makeStyles((theme) => ({
       display: "flex"
     },
     grid: {
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
     width: "100%"
+    },
+    toggleSize: {
+      height: "60%",
+      width: "30px"
     },
     gridStat: {
     marginTop: theme.spacing(3),
@@ -48,12 +60,17 @@ const StockDetail = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const alert = useAlert()
+  const [chartChoice, setChartChoice] = React.useState("candle");
+  const [resolution, setResolution] = React.useState("D");
 
   const companyInfo = useSelector(state => state.companyInfo);
   const stockInfo = useSelector(state => state.companyStockInfo);
   const candleInfo = useSelector(state => state.companyCandleInfo);
   const wishlist = useSelector(state => state.wishlist);
+  const loading = useSelector(state => state.loading);
   
+  let dateInfo = dateCalculator(resolution);
+
   const checkWishlist= () => {
     let checkWish = false;
     wishlist.map((item) => {
@@ -64,7 +81,19 @@ const StockDetail = () => {
     })
     return checkWish
   }
+
+  // setValue(newValue);
+  const handleChangeChart = (event, newValue) => {
+    setChartChoice(newValue);
+  };
   
+  const handleChangeResolution = (event, newValue) => {
+    setResolution(newValue)
+    dispatch(updateCandle(symbol, newValue));
+    dateInfo = dateCalculator(newValue);
+    console.log(dateInfo);
+  }
+
   const [isWishlist, setIsWishlist] = React.useState(() => {
     return checkWishlist();
   });
@@ -107,7 +136,7 @@ const StockDetail = () => {
             <IconButton onClick={() => {
               setIsWishlist(true);
               dispatch(addWishlist({symbol}))
-              alert.show("wishlist에 등록했습니다.", {type: types.SUCCESS})
+              alert.show("wishlist를 등록했습니다.", {type: types.SUCCESS})
               }}>
               <StarBorder  fontSize="large" />
             </IconButton>
@@ -116,6 +145,7 @@ const StockDetail = () => {
             <IconButton onClick={() => {
               setIsWishlist(false);
               dispatch(deleteWishlist({symbol}))
+              alert.show("wishlist를 삭제했습니다.", {type: types.ERROR})
             }} >
               <StarIcon fontSize="large" style={{color:"#ffeb3b"}} />
             </IconButton>
@@ -125,11 +155,54 @@ const StockDetail = () => {
         </Grid>
         <Grid container spacing={0}>
         {candleInfo &&
-          <Grid className={classes.grid} item md={7}>
-              <AreaChart type="hybrid" data={candleInfo} />
+          <Grid component="paper" className={classes.grid} item md={8}> 
+            <div className={classes.flex} style={{alignItems: 'center', justifyContent: 'space-around'}}>
+              <Tabs
+                value={chartChoice}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={handleChangeChart}
+                aria-label="disabled tabs example"
+              >
+                <Tab label="CANDLE" value="candle" />
+                <Tab label="AREA" value="area" />
+              </Tabs>
+              <ToggleButtonGroup size="small" value={resolution} exclusive onChange={handleChangeResolution}>
+                <ToggleButton className={classes.toggleSize} value="5">
+                  5
+                </ToggleButton>
+                <ToggleButton className={classes.toggleSize} value="15">
+                  15
+                </ToggleButton>
+                <ToggleButton className={classes.toggleSize} value="D">
+                  1D
+                </ToggleButton>
+                <ToggleButton className={classes.toggleSize} value="M">
+                  1M
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            {chartChoice==="area" && 
+              <LoadingOverlay
+              active={loading}
+              spinner
+              text='Loading your chart...'
+              >
+                <AreaChart dateInfo={dateInfo} type="hybrid" data={candleInfo} />
+              </LoadingOverlay>
+              }
+            {chartChoice==="candle" && 
+              <LoadingOverlay
+              active={loading}
+              spinner
+              text='Loading your chart...'
+              >
+                <CandleStickChart dateInfo={dateInfo} type="hybrid" data={candleInfo} />}
+              </LoadingOverlay>
+              }
           </Grid>
         } 
-          <Grid className={classes.gridStat} item md={5}>
+          <Grid className={classes.gridStat} item md={4}>
             <CompanyStat stockInfo={stockInfo} />
           </Grid>   
         </Grid>      

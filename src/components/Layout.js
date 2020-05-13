@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link } from "react-router-dom";
 
 import MenuList from './List/MenuList';
 
@@ -94,7 +96,7 @@ export default function Layout() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        style={{background:'#2979ff'}}
+        style={{background:'#9575cd'}}
       >
         <Toolbar>
           <IconButton
@@ -106,9 +108,14 @@ export default function Layout() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography component="div" variant="h6" noWrap>
             Stock Market
           </Typography>
+          <IconButton
+          component={Link}
+          to="/"  >
+            <HomeIcon/>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

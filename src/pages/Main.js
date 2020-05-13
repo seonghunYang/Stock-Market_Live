@@ -8,7 +8,7 @@ export default function Main() {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
+        <Typography component="div" style={{ backgroundColor: '#9575cd', height: '100vh' }} />
       </Container>
     </React.Fragment>
   );

@@ -21,12 +21,15 @@ function dataProcess(data) {
 }
 
 export async function candleDataLoader(symbol, resolution = "D"){
+  let date = dateCalculator(resolution);
+  
   let days = 60 * 60 * 24;
   let week = days * 7;
   let year = days * 365;
   let d = new Date();
   let toDay = parseInt(d.getTime() / 1000); 
-  let fromDay = parseInt(d.getTime() / 1000) - 50 * week - days; 
+  let fromDay = parseInt(d.getTime() / 1000) - 20 * date.loadTime; 
+  
   try{
     const candle_data = await axios(CANDLE_URL, 
       {params: {
@@ -48,3 +51,41 @@ export async function candleDataLoader(symbol, resolution = "D"){
       console.error(error)
     }
 } 
+
+export function dateCalculator(resolution){
+  let hour = 60 * 60; 
+  let days = hour * 24;
+  let week = days * 7;
+  let year = days * 365;
+  let d = new Date();
+  let toDay = parseInt(d.getTime() / 1000); 
+
+  if(resolution === "5"){
+    let dateFrom = new Date((toDay- 18*hour)* 1000);
+    let dateTo = new Date((toDay )* 1000);
+    let number = 40
+    let loadTime = 3 * days
+    return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
+  }
+  if(resolution === "15"){
+    let dateFrom = new Date((toDay- 5*days)* 1000);
+    let dateTo = new Date((toDay )* 1000);
+    let number = 150
+    let loadTime = 2 * week
+    return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
+  }
+  if(resolution === "D"){
+    let dateFrom = new Date((toDay- 16*week)* 1000);
+    let dateTo = new Date((toDay )* 1000);
+    let number = 100
+    let loadTime = 2 * year
+    return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
+  }
+  if(resolution === "M"){
+    let dateFrom = new Date((toDay- 5*year)* 1000);
+    let dateTo = new Date((toDay )* 1000);
+    let number = 50
+    let loadTime = 20 * year
+    return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
+  }
+}

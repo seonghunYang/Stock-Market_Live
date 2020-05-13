@@ -35,7 +35,7 @@ export default function CompanyList() {
     <div>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
-          <BusinessIcon />
+          <BusinessIcon style={{color:"#9575cd"}} />
         </ListItemIcon>
         <ListItemText primary="Company List" />
         {open ? <ExpandLess /> : <ExpandMore />}

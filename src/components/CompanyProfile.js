@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: "4.5em"
   },
-  text: {
-    fontSize: "1.75em",
+  table: {
+    padding: 10
   }
   })
 )
@@ -25,25 +25,25 @@ const CompanyProfile = ({ companyInfo }) => {
   return (
     <>
       <TableContainer component={Paper} elevation={0}>
-        <Table className={classes.table} aria-label="companyInfo">
+        <Table  aria-label="companyInfo">
           <TableHead>
             <TableRow>
-            <TableCell>CompanyProfile</TableCell>
-            <TableCell></TableCell>
+            <TableCell className={classes.table}>CompanyProfile</TableCell>
+            <TableCell className={classes.table}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow key="industry">
-              <TableCell component="th" scope="row">
+              <TableCell className={classes.table} component="th" scope="row">
                 산업 분야
               </TableCell>
-              <TableCell >{companyInfo.finnhubIndustry}</TableCell>
+              <TableCell className={classes.table} >{companyInfo.finnhubIndustry}</TableCell>
             </TableRow>
             <TableRow key="market">
-              <TableCell component="th" scope="row">
+              <TableCell className={classes.table} component="th" scope="row">
                 시가 총액
               </TableCell>
-              <TableCell >{companyInfo.marketCapitalization}</TableCell>
+              <TableCell className={classes.table} >{companyInfo.marketCapitalization}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

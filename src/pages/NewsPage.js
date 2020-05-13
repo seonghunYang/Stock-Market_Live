@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
     }    
   },
   title: {
-    marginBottom:0,
-    fontSize: "4.5em"
+    marginBottom: theme.spacing(1),
+    marginTop:theme.spacing(6),
+    fontSize: "4.5em",
+    fontWeight: "bold",
   },
   })
 )
@@ -52,7 +54,7 @@ export default function NewsPage() {
     <>
       {viewNews &&
         <Container maxWidth="md" style={{display:"flex", flexDirection:"column", alignItems:'center'}}>
-            <div className={classes.title}>News</div>
+            <div className={classes.title}>Stock News</div>
             <NewsChips />
             <NewsSearchBar/>
             {news.length === 0 && <div>뉴스가 없습니다. 다른 symbol로 검색해주세요</div>}
