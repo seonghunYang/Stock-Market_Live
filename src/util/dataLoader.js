@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const CANDLE_URL = "https://finnhub.io/api/v1/stock/candle"
+const BASE_URL = "https://finnhub.io/api";
 const API_KEY = "bqgqrufrh5r8lcmqasig";
 
 //chart 만들기 위한 데이터 모양으로 변경
@@ -31,7 +31,7 @@ export async function candleDataLoader(symbol, resolution = "D"){
   let fromDay = parseInt(d.getTime() / 1000) - 20 * date.loadTime; 
   
   try{
-    const candle_data = await axios(CANDLE_URL, 
+    const candle_data = await axios(BASE_URL+"/v1/stock/candle", 
       {params: {
         symbol: symbol, 
         resolution: resolution, 
@@ -51,6 +51,19 @@ export async function candleDataLoader(symbol, resolution = "D"){
       console.error(error)
     }
 } 
+export async function createQuote(symbol) {
+  try {
+    const {data} = await axios(BASE_URL+"/v1/quote", {
+      params:{
+        symbol: symbol,
+        token: API_KEY
+    }})
+    console.log(data)
+    return data;
+  }catch(error){
+    console.error(error);
+  }
+}
 
 export function dateCalculator(resolution){
   let hour = 60 * 60; 
@@ -85,7 +98,7 @@ export function dateCalculator(resolution){
     let dateFrom = new Date((toDay- 5*year)* 1000);
     let dateTo = new Date((toDay )* 1000);
     let number = 50
-    let loadTime = 20 * year
+    let loadTime = 10 * year
     return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
   }
 }

@@ -8,8 +8,8 @@ class LiveStock extends Component {
   constructor(props) {
     super(props);
 
-    const changeValue =  this.props.stockInfo.c -this.props.stockInfo.o;
-    const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.o * 100)*100) / 100;
+    const changeValue =  this.props.stockInfo.c -this.props.stockInfo.pc;
+    const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.pc * 100)*100) / 100;
     let change = [];
     if (changeValue > 0){
       change = ["+", changeP]
@@ -29,8 +29,8 @@ class LiveStock extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if(nextProps.symbol !== this.props.symbol){
-      const changeValue =  nextProps.stockInfo.c -nextProps.stockInfo.o;
-      const changeP = Math.round((Math.abs(changeValue)/nextProps.stockInfo.o * 100)*100) / 100;
+      const changeValue =  nextProps.stockInfo.c -nextProps.stockInfo.pc;
+      const changeP = Math.round((Math.abs(changeValue)/nextProps.stockInfo.pc * 100)*100) / 100;
       let change = [];
       if (changeValue > 0){
         change = ["+", changeP]
@@ -71,8 +71,8 @@ class LiveStock extends Component {
         }
         if(setTimer){
           const updatePrice = socketData.data[0].p;
-          const changeValue =  updatePrice -this.props.stockInfo.o;
-          const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.o * 100)*100) / 100;
+          const changeValue =  updatePrice -this.props.stockInfo.pc;
+          const changeP = Math.round((Math.abs(changeValue)/this.props.stockInfo.pc * 100)*100) / 100;
           let change = [];
           if (changeValue > 0){
             change = ["+", changeP]

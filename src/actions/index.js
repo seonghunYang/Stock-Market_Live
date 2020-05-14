@@ -1,10 +1,12 @@
 import axios from 'axios';
+import {createQuote} from '../util/dataLoader';
 import {candleDataLoader} from '../util/dataLoader';
 
 const API_KEY = "bqgqrufrh5r8lcmqasig";
 const BASE_URL = "https://finnhub.io/api";
 
 let wishlist = [];
+
 
 export function createCompanyList() {
   return async (dispatch) => {
@@ -17,16 +19,31 @@ export function createCompanyList() {
       }
       wishlist = Object.values(parsedWishlist);
       console.log(wishlist)
+      
+      let importantStockQuote = [];
+
+      let AAPL_data = await createQuote("AAPL");
+      AAPL_data["symbol"] = "AAPL"
+      let MSFT_data = await createQuote("MSFT");
+      MSFT_data["symbol"] = "MSFT"
+      let AMZN_data = await createQuote("AMZN");
+      AMZN_data["symbol"] = "AMZN"
+      let GOOGL_data = await createQuote("GOOGL");
+      GOOGL_data["symbol"] = "GOOGL"
+      importantStockQuote = [AAPL_data, MSFT_data, AMZN_data, GOOGL_data];
       dispatch({
         type:"CREATE_COMPANYLIST",
         payload: data,
         wishlist: parsedWishlist,
+        importantStock : importantStockQuote
       });
     }catch(error) {
       console.error(error);
     }
   }
 }
+//return
+
 
 export function SearchCompany(companyList) {
   return {
@@ -97,11 +114,11 @@ function saveWishlist() {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
 }
 
-export function addWishlist (symbol) {
-  wishlist.push(symbol);
+export function addWishlist (data) {
+  wishlist.push(data);
   saveWishlist();
   return ({
-    type: "ADD_WISHLIST", symbol: symbol
+    type: "ADD_WISHLIST", symbol: data
   });
 }
 

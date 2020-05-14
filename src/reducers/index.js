@@ -8,7 +8,8 @@ const initialState = {
   companyCandleInfo: null,
   news: null,
   wishlist: [],
-  loading: false
+  loading: false,
+  importantStock : null
 }
 
 const reducer = produce((state, action) => {
@@ -17,6 +18,7 @@ const reducer = produce((state, action) => {
       state.companyList = action.payload;
       state.searchedCompanyList = action.payload;
       state.wishlist = action.wishlist;
+      state.importantStock = action.importantStock
       break;
     case "SEARCH_COMPANY":
       state.searchedCompanyList = action.payload;

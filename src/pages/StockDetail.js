@@ -91,6 +91,7 @@ const StockDetail = () => {
     if(!newValue){
       return ;
     }
+    console.log(newValue)
     setResolution(newValue)
     dispatch(updateCandle(symbol, newValue));
     dateInfo = dateCalculator(newValue);
@@ -125,7 +126,7 @@ const StockDetail = () => {
 //주식시장이 주말에 안열어서 확인 불가능 
   return (
     <>
-      {companyInfo && <Container maxWidth="md" className={classes.root}>
+      {companyInfo && stockInfo && <Container maxWidth="md" className={classes.root}>
         <Grid container spacing={0}>
           <Grid item md={5} className={classes.root}>
             <span className={classes.title}>{companyInfo.symbol}</span>
@@ -138,7 +139,7 @@ const StockDetail = () => {
           {!isWishlist &&
             <IconButton onClick={() => {
               setIsWishlist(true);
-              dispatch(addWishlist({symbol}))
+              dispatch(addWishlist({symbol: symbol, stockInfo: stockInfo}))
               alert.show("wishlist를 등록했습니다.", {type: types.SUCCESS})
               }}>
               <StarBorder  fontSize="large" />
@@ -200,7 +201,7 @@ const StockDetail = () => {
               spinner
               text='Loading your chart...'
               >
-                <CandleStickChart dateInfo={dateInfo} type="hybrid" data={candleInfo} />}
+                <CandleStickChart dateInfo={dateInfo} type="hybrid" data={candleInfo} />
               </LoadingOverlay>
               }
           </Grid>
