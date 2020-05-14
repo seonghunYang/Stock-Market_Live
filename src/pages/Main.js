@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid';
 
 import StockCard from "../components/StockCard";
+import Stepper from "../components/Stepper";
 const useStyles = makeStyles((theme) => ({
   title: {
     paddingTop: theme.spacing(2),
@@ -60,7 +61,11 @@ export default function Main() {
           ))
         }
         </Grid>
-      <Divider className={classes.divider} />
+        <Divider className={classes.divider} />
+        <Typography className={classes.title} component="div" variant="h5">
+            Tutorial
+        </Typography>
+        <Stepper />
       </Container>
     </>
   );

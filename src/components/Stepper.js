@@ -5,7 +5,10 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
+import TutorialCard from './TutorialCard';
+import Tutorial_content from '../util/Tutuorial_content';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -17,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  content: {
+    marginTop: theme.spacing(3)
+  }
 }));
 
 function getSteps() {
@@ -26,11 +32,56 @@ function getSteps() {
 function getStepContent(stepIndex) {
   switch (stepIndex) {
     case 0:
-      return 'Select campaign settings...';
+      const one = Tutorial_content(0);
+      const two = Tutorial_content(1);
+      const three = Tutorial_content(2);
+      return (
+        <Grid container spacing={5} >
+          <Grid item md={4}>
+            <TutorialCard data={one} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={two} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={three} />
+          </Grid>
+        </Grid>
+      );
     case 1:
-      return 'What is an ad group anyways?';
+      const four = Tutorial_content(3);
+      const five = Tutorial_content(4);
+      const six = Tutorial_content(5);
+      return (
+        <Grid container spacing={5} >
+          <Grid item md={4}>
+            <TutorialCard data={four} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={five} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={six} />
+          </Grid>
+        </Grid>
+      );  
     case 2:
-      return 'This is the bit I really care about!';
+      const seven = Tutorial_content(6);
+      const eight = Tutorial_content(7);
+      const nine = Tutorial_content(8);
+      return (
+        <Grid container spacing={5} >
+          <Grid item md={4}>
+            <TutorialCard data={seven} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={eight} />
+          </Grid>
+          <Grid item md={4}>
+            <TutorialCard data={nine} />
+          </Grid>
+        </Grid>
+      );
     default:
       return 'Unknown stepIndex';
   }
@@ -69,9 +120,9 @@ export default function HorizontalLabelPositionBelowStepper() {
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
+          <div className={classes.content}>
+            {getStepContent(activeStep)}
+            <div className={classes.content}>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
