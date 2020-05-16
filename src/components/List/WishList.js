@@ -34,11 +34,14 @@ const WishListItem = ({symbol}) => {
   const alert = useAlert()
 
   return(
+    <div style={{display:"flex", paddingLeft: 20 }}>
     <ListItem button={true} 
     component={Link}
     to={`/stock/${symbol}`}
+
     >
       <ListItemText primary={symbol} style={{textAlign: "center"}}/>
+    </ListItem>
       <ListItemIcon>
         <IconButton onClick={() => {
             dispatch(deleteWishlist({symbol}))
@@ -47,7 +50,7 @@ const WishListItem = ({symbol}) => {
           <StarIcon style={{color:"#ffeb3b"}} />
         </IconButton>
       </ListItemIcon>
-    </ListItem>
+    </div>
   );
 }
 

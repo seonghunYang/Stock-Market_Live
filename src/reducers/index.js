@@ -9,7 +9,8 @@ const initialState = {
   news: null,
   wishlist: [],
   loading: false,
-  importantStock : null
+  importantStock : null,
+  dynamicNews : null
 }
 
 const reducer = produce((state, action) => {
@@ -32,7 +33,11 @@ const reducer = produce((state, action) => {
       state.news = action.payload;
       break;
     case "CREATE_SYMBOL_NEWS":
-      state.news = action.payload;
+      if(action.use === "0"){
+        state.news = action.payload;
+      }else if (action.use === "1") {
+        state.dynamicNews = action.payload;
+      }
       break;
     case "ADD_WISHLIST": 
       console.log(action.symbol);
@@ -52,6 +57,9 @@ const reducer = produce((state, action) => {
       break;
     case "END_LOADING":
       state.loading = false;
+      break;
+    case "INITIAL_NEWS":
+      state.dynamicNews = null;
       break;
     default:
       break;

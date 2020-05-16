@@ -21,7 +21,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   content: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
+    width: "100%"
+  },
+  card:{
+    padding: 0
   }
 }));
 
@@ -29,21 +33,24 @@ function getSteps() {
   return ['Search for company you want in the list!', 'Get stock information', 'Register on your wishlist!'];
 }
 
-function getStepContent(stepIndex) {
+function getStepContent(stepIndex) {  
   switch (stepIndex) {
     case 0:
       const one = Tutorial_content(0);
       const two = Tutorial_content(1);
       const three = Tutorial_content(2);
-      return (
-        <Grid container spacing={5} >
-          <Grid item md={4}>
+      return (      
+        <Grid container 
+          direction="row"
+          justify="space-around"
+          alignItems="center" >
+          <Grid item md={3}>
             <TutorialCard data={one} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={two} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={three} />
           </Grid>
         </Grid>
@@ -53,14 +60,17 @@ function getStepContent(stepIndex) {
       const five = Tutorial_content(4);
       const six = Tutorial_content(5);
       return (
-        <Grid container spacing={5} >
-          <Grid item md={4}>
+        <Grid container 
+          direction="row"
+          justify="space-around"
+          alignItems="center" >
+          <Grid item md={3}>
             <TutorialCard data={four} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={five} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={six} />
           </Grid>
         </Grid>
@@ -70,14 +80,17 @@ function getStepContent(stepIndex) {
       const eight = Tutorial_content(7);
       const nine = Tutorial_content(8);
       return (
-        <Grid container spacing={5} >
-          <Grid item md={4}>
+        <Grid container 
+          direction="row"
+          justify="space-around"
+          alignItems="center" >
+          <Grid item md={3}>
             <TutorialCard data={seven} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={eight} />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TutorialCard data={nine} />
           </Grid>
         </Grid>
@@ -120,7 +133,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
-          <div className={classes.content}>
+          <div>
             {getStepContent(activeStep)}
             <div className={classes.content}>
               <Button

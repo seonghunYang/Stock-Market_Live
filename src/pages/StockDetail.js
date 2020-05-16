@@ -14,8 +14,11 @@ import Tab from '@material-ui/core/Tab';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import LoadingOverlay from 'react-loading-overlay';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { detailInfo } from '../actions/index';
+import DynamicNews from '../components/DynamicNews';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
 import LiveStock from '../components/LiveStock';
@@ -51,6 +54,16 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
       fontSize: "1.75em"
+    },
+    subtitle: {
+      fontWeight: "bold",
+    },
+    paddingY: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
+    divider: {
+      marginTop: theme.spacing(3),
     }
   })
 )
@@ -111,6 +124,7 @@ const StockDetail = () => {
       }
       else{
         dispatch(detailInfo(symbol));
+        dispatch({type: "INITIAL_NEWS"})
         setResolution("D")
         const bool = checkWishlist();
         setIsWishlist(bool);
@@ -202,7 +216,7 @@ const StockDetail = () => {
               spinner
               text='Loading your chart...'
               >
-                <CandleStickChart dateInfo={dateInfo} type="hybrid" data={candleInfo} />
+                <CandleStickChart symbol={symbol} dateInfo={dateInfo} type="hybrid" data={candleInfo} />
               </LoadingOverlay>
               }
           </Grid>
@@ -210,7 +224,17 @@ const StockDetail = () => {
           <Grid className={classes.gridStat} item md={4}>
             <CompanyStat stockInfo={stockInfo} />
           </Grid>   
-        </Grid>      
+        </Grid> 
+        <Divider className={classes.divider} />
+        <div className={classes.paddingY}>
+          <Typography className={classes.subtitle} component="span" variant="h4">
+              CompanyNews
+          </Typography>
+          <Typography className={classes.subtitle} component="span" variant="subtitle1">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *캔들 차트에 뉴스를 보고 싶은 부분을 클릭해보세요!
+          </Typography>
+        </div>
+        <DynamicNews />     
       </Container>}
     </>  
     )

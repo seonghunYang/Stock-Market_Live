@@ -8,6 +8,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import BusinessIcon from '@material-ui/icons/Business';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from 'react-redux'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CompanyItem from './CompanyItem';
 import CompanySearchBar from './CompanySearchBar';
@@ -48,7 +49,9 @@ export default function CompanyList() {
           next={isMoreData}
           hasMore={hasMore}
           height={400}
-          loader={<div style={{ textAlign: "center" }}>Loading..</div>}
+          loader={<div style={{ textAlign: "center" }}>
+                <CircularProgress size={20} />
+          </div>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>Yay! You have seen it all</b>

@@ -10,6 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import StockCard from "../components/StockCard";
 import Stepper from "../components/Stepper";
 const useStyles = makeStyles((theme) => ({
+  root:{
+    padding: 0
+  },
   title: {
     paddingTop: theme.spacing(2),
     fontWeight: "bold",
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   mainCard: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   divider: {
     marginTop: theme.spacing(3),
@@ -38,7 +41,7 @@ export default function Main() {
   }
   return (
     <>
-      <Container maxWidth="md">
+      <Container maxWidth="md" >
         <Typography className={classes.title} component="div" variant="h3">
           Hello World!
         </Typography>
@@ -55,7 +58,7 @@ export default function Main() {
         <Grid container spacing={3}>
           {importantStock && 
           importantStock.map((item) => (
-            <Grid item md={3} className={classes.mainCard}>
+            <Grid item md={3} xs={6} className={classes.mainCard}>
               <StockCard data={item} />
             </Grid>
           ))

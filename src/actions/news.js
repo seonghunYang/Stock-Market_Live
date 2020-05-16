@@ -25,21 +25,31 @@ function getFormatDate(date){
   return  year + '-' + month + '-' + day;
 }
 
-function formatDate() {
+function formatDate(Todate, use) {
   let days = 1000 *60 * 60 * 24;
   let week = days * 7;
   let year = days * 365;
-  let today = new Date();
-  let fromDay = new Date(today.getTime() - year)
-  today = getFormatDate(today);
-  fromDay = getFormatDate(fromDay);
-  return [today, fromDay];
+  if(use === "0"){
+    let today = new Date();
+    let fromDay = new Date(today.getTime() - year)
+    today = getFormatDate(today);
+    fromDay = getFormatDate(fromDay);
+    return [today, fromDay];
+  }
+  else if (use === "1") {
+    let today = new Date(Todate);
+    let fromDay = new Date(today.getTime() - days)
+    today = getFormatDate(today);
+    fromDay = getFormatDate(fromDay);
+    return [today, fromDay]
+  }
 }
 
-export function SymbolSearchNews(term) {
+//use === 0 => 뉴스페이지 뉴스, use === 1 다이나믹 뉴스(상세 페이지)
+export function SymbolSearchNews(term, Todate = new Date(), use = "0") {
   return async (dispatch) => {
     try{
-      const date = formatDate();
+      const date = formatDate(Todate, use);
       const{data} = await axios(BASE_URL+"/v1/company-news",{
         params: {
           symbol: term,
@@ -53,7 +63,7 @@ export function SymbolSearchNews(term) {
       }
       console.log(data);
       dispatch({
-        type: "CREATE_SYMBOL_NEWS", payload: data
+        type: "CREATE_SYMBOL_NEWS", payload: data, use: use
       })
     }catch(error) {
       console.error(error);
