@@ -111,6 +111,7 @@ const StockDetail = () => {
       }
       else{
         dispatch(detailInfo(symbol));
+        setResolution("D")
         const bool = checkWishlist();
         setIsWishlist(bool);
       }
@@ -126,7 +127,7 @@ const StockDetail = () => {
 //주식시장이 주말에 안열어서 확인 불가능 
   return (
     <>
-      {companyInfo && stockInfo && <Container maxWidth="md" className={classes.root}>
+      {companyInfo && <Container maxWidth="md" className={classes.root}>
         <Grid container spacing={0}>
           <Grid item md={5} className={classes.root}>
             <span className={classes.title}>{companyInfo.symbol}</span>

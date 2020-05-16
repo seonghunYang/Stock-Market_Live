@@ -74,15 +74,15 @@ export function dateCalculator(resolution){
   let toDay = parseInt(d.getTime() / 1000); 
 
   if(resolution === "5"){
-    let dateFrom = new Date((toDay- 18*hour)* 1000);
-    let dateTo = new Date((toDay )* 1000);
+    let dateFrom = new Date((toDay- 60*hour)* 1000);
+    let dateTo = new Date((toDay - 10* 60 )* 1000);
     let number = 40
     let loadTime = 3 * days
     return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
   }
   if(resolution === "15"){
     let dateFrom = new Date((toDay- 5*days)* 1000);
-    let dateTo = new Date((toDay )* 1000);
+    let dateTo = new Date((toDay - 20* 15 )* 1000);
     let number = 150
     let loadTime = 2 * week
     return {from: dateFrom, to: dateTo, number: number, loadTime: loadTime}  
