@@ -21,7 +21,7 @@ const canvasGradient = createVerticalLinearGradient([
 ]);
 
 
-class AreaChart extends React.Component {
+class AreaChartS extends React.Component {
   render() {
 		const { type, data: initialData, width, ratio, dateInfo } = this.props;
     const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
@@ -69,17 +69,17 @@ class AreaChart extends React.Component {
 }
 
 
-AreaChart.propTypes = {
+AreaChartS.propTypes = {
 	data: PropTypes.array.isRequired,
 	width: PropTypes.number.isRequired,
 	ratio: PropTypes.number.isRequired,
 	type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
 };
 
-AreaChart.defaultProps = {
+AreaChartS.defaultProps = {
 	type: "svg",
 };
 
-AreaChart = fitWidth(AreaChart);
+AreaChartS = fitWidth(AreaChartS);
 
-export default AreaChart;
+export default AreaChartS;

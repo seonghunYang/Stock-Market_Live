@@ -20,7 +20,6 @@ import { last } from "react-stockcharts/lib/utils";
 
 class CandleStickChart extends React.Component {
 	render() {
-    // let xExtents = dateCalculator();
 		const { type, data: initialData, width, ratio, dateInfo } = this.props;
 		console.log(dateInfo);
 		const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
