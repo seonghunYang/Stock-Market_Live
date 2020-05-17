@@ -27,7 +27,6 @@ function getFormatDate(date){
 
 function formatDate(Todate, use) {
   let days = 1000 *60 * 60 * 24;
-  let week = days * 7;
   let year = days * 365;
   if(use === "0"){
     let today = new Date();
@@ -61,7 +60,6 @@ export function SymbolSearchNews(term, Todate = new Date(), use = "0") {
       if(data.length !== 0) {
         data[0]["symbol"] = term;
       }
-      console.log(data);
       dispatch({
         type: "CREATE_SYMBOL_NEWS", payload: data, use: use
       })

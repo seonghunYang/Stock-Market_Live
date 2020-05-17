@@ -1,5 +1,4 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,7 +7,7 @@ import { useSelector } from 'react-redux'
 import Grid from '@material-ui/core/Grid';
 
 import StockCard from "../components/StockCard";
-import Stepper from "../components/Stepper";
+import Tutorial from "../components/Tutorial";
 const useStyles = makeStyles((theme) => ({
   root:{
     padding: 0
@@ -34,11 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Main() {
   const classes = useStyles();
   const importantStock = useSelector(state => state.importantStock);
-  const wishlist = useSelector(state => state.wishlist);
   
-  if(importantStock){
-  console.log(importantStock[0])
-  }
   return (
     <>
       <Container maxWidth="md" >
@@ -57,8 +52,8 @@ export default function Main() {
         </Typography>
         <Grid container spacing={3}>
           {importantStock && 
-          importantStock.map((item) => (
-            <Grid item md={3} xs={6} className={classes.mainCard}>
+          importantStock.map((item, idx) => (
+            <Grid key={idx} item md={3} xs={6} className={classes.mainCard}>
               <StockCard data={item} />
             </Grid>
           ))
@@ -68,7 +63,7 @@ export default function Main() {
         <Typography className={classes.title} component="div" variant="h5">
             Tutorial
         </Typography>
-        <Stepper />
+        <Tutorial />
       </Container>
     </>
   );

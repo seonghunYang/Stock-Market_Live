@@ -40,7 +40,6 @@ const reducer = produce((state, action) => {
       }
       break;
     case "ADD_WISHLIST": 
-      console.log(action.symbol);
       state.wishlist.push(action.symbol);
       break;
     case "DELETE_WISHLIST":

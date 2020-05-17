@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -17,17 +16,6 @@ import { useAlert } from 'react-alert';
 import { types } from 'react-alert';
 
 import {deleteWishlist} from "../../actions/index";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
-}));
 
 const WishListItem = ({symbol}) => {
   const dispatch = useDispatch();
@@ -55,7 +43,6 @@ const WishListItem = ({symbol}) => {
 }
 
 export default function WishList() {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const wishlist = useSelector(state => state.wishlist);
 
@@ -74,8 +61,8 @@ export default function WishList() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {wishlist.length !== 0 && wishlist.map((item) => (
-            <WishListItem symbol={item.symbol} />
+          {wishlist.length !== 0 && wishlist.map((item, idx) => (
+            <WishListItem key={idx} symbol={item.symbol} />
           ))}
           {wishlist.length === 0 && 
           <div></div>

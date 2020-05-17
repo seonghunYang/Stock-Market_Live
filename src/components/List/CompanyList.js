@@ -67,7 +67,3 @@ export default function CompanyList() {
     </div>
   );
 }
-
-        // <FixedSizeList height={400} width={200} itemSize={46} itemCount={100}>
-        //   CompanyItem
-        // </FixedSizeList>

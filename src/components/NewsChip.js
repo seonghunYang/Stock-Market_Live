@@ -57,8 +57,8 @@ export default function NewsChip() {
       <ChipItem value="forex" type="C" />
       <ChipItem value="crypto" type="C" />
       <ChipItem value="merger" type="C" />
-      {wishlist.map(item => (
-        <ChipItem value={item.symbol} type="W" />
+      {wishlist.map((item, idx) => (
+        <ChipItem key={idx} value={item.symbol} type="W" />
       ))}
     </div>
   );

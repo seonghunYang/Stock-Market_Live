@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ItemsCarousel from 'react-items-carousel';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from '@material-ui/core/CardHeader';
 
 const DynamicNews = ({news}) => {
   let date = new Date(news.datetime * 1000);
@@ -41,7 +40,6 @@ const DynamicNews = ({news}) => {
 
 export default () => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const chevronWidth = 40;
   const dynamicNews = useSelector(state => state.dynamicNews);
 
   return (

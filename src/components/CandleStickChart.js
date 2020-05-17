@@ -25,7 +25,6 @@ import {SymbolSearchNews} from "../actions/news";
 class CandleStickChart extends React.Component {
 	render() {
 		const { type, data: initialData, width, ratio, dateInfo, symbol, dispatch } = this.props;
-		console.log(dateInfo);
 		const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
 			d => d.date
 		);
@@ -50,10 +49,8 @@ class CandleStickChart extends React.Component {
 				xAccessor={xAccessor}
 				displayXAccessor={displayXAccessor}
 				xExtents={xExtents}
-				onClick={(event) => {console.log(event)}}
 			>
-				<Chart id={1} yExtents={[d => [d.high, d.low]]}
-				onClick={(event) => {console.log(event)}}>
+				<Chart id={1} yExtents={[d => [d.high, d.low]]}>
 					<XAxis axisAt="bottom" orient="bottom" />
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<MouseCoordinateY
@@ -64,11 +61,9 @@ class CandleStickChart extends React.Component {
 					<CandlestickSeries />
 					<ClickCallback
 						onClick={ (moreProps) => { 
-							console.log("onClick", moreProps.currentItem.date);
 							dispatch(SymbolSearchNews(symbol, moreProps.currentItem.date, "1"))
 						} }
 					/>
-					
 					<OHLCTooltip forChart={1} origin={[-40, 0]} />
 				</Chart>
 				<Chart
@@ -76,7 +71,6 @@ class CandleStickChart extends React.Component {
 					height={150}
 					yExtents={d => d.volume}
 					origin={(w, h) => [0, h - 150]}
-					onClick={(event) => {console.log(event)}}
 				>
 					<YAxis
 						axisAt="left"

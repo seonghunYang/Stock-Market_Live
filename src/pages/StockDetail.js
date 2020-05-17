@@ -17,13 +17,13 @@ import LoadingOverlay from 'react-loading-overlay';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-import { detailInfo } from '../actions/index';
 import DynamicNews from '../components/DynamicNews';
 import CompanyProfile from '../components/CompanyProfile';
 import CompanyStat from '../components/CompanyStat';
 import LiveStock from '../components/LiveStock';
 import AreaChart from '../components/AreaChart';
 import CandleStickChart from '../components/CandleStickChart';
+import { detailInfo } from '../actions/index';
 import {addWishlist} from "../actions/index";
 import {deleteWishlist} from "../actions/index";
 import {updateCandle} from "../actions/index";
@@ -86,9 +86,8 @@ const StockDetail = () => {
 
   const checkWishlist= () => {
     let checkWish = false;
-    wishlist.map((item) => {
+    wishlist.forEach((item) => {
       if(item.symbol === symbol) {
-        console.log("wish")
         checkWish = true;
       }
     })
@@ -104,11 +103,9 @@ const StockDetail = () => {
     if(!newValue){
       return ;
     }
-    console.log(newValue)
     setResolution(newValue)
     dispatch(updateCandle(symbol, newValue));
     dateInfo = dateCalculator(newValue);
-    console.log(dateInfo);
   }
 
   const [isWishlist, setIsWishlist] = React.useState(() => {
@@ -135,10 +132,6 @@ const StockDetail = () => {
   }
   })
 
-
-//symbol name  marketCapot... phone weburl industry
-//차트와 테이블 area chart 일자별 선택과 candlechart 선택 
-//주식시장이 주말에 안열어서 확인 불가능 
   return (
     <>
       {companyInfo && <Container maxWidth="md" className={classes.root}>
@@ -174,7 +167,7 @@ const StockDetail = () => {
         </Grid>
         <Grid container spacing={0}>
         {candleInfo &&
-          <Grid component="paper" className={classes.grid} item md={8}> 
+          <Grid className={classes.grid} item md={8}> 
             <div className={classes.flex} style={{alignItems: 'center', justifyContent: 'space-around'}}>
               <Tabs
                 value={chartChoice}

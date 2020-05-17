@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TutorialCard({data}) {
   const classes = useStyles();
-  console.log(data)
   return (
     <Card className={classes.root}>
       <CardHeader

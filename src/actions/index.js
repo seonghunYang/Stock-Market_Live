@@ -18,7 +18,6 @@ export function createCompanyList() {
         parsedWishlist = JSON.parse(loadedWishlist);
       }
       wishlist = Object.values(parsedWishlist);
-      console.log(wishlist)
       
       let importantStockQuote = [];
 
