@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 [![HitCount](http://hits.dwyl.com/seonghunYang/Stock-Market_Live.svg)](http://hits.dwyl.com/seonghunYang/Stock-Market_Live)
 
 more information: https://www.youtube.com/watch?v=ncYRjIVIC3I
-
+사이트 주소: https://gifted-mclean-a7a1a6.netlify.app/
 ## Available Scripts
 
 In the project directory, you can run:
